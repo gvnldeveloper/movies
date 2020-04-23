@@ -7,33 +7,37 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import com.kpn.model.Genre;
-import com.kpn.model.RuntimeSpecialSymbole;
+import com.kpn.model.constant.Genre;
+import com.kpn.model.constant.RuntimeSpecialSymbol;
 
 @Entity
 public class Interest {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int interest_id;
+	private int interestId;
 	private String gender;
 	private String ratings;
 	private boolean ratingsWithPlus;
 
 	private String runtime;
 	@Enumerated(EnumType.STRING)
-	private RuntimeSpecialSymbole runtimeSpecialSymbole;
+	private RuntimeSpecialSymbol runtimeSpecialSymbol;
 
 	@Enumerated(EnumType.STRING)
 	private Genre genres;
 	private String actors;
 
-	public int getInterest_id() {
-		return interest_id;
+	public int getInterestId() {
+		return interestId;
 	}
 
-	public void setInterest_id(int interest_id) {
-		this.interest_id = interest_id;
+	public void setInterestId(int interestId) {
+		this.interestId = interestId;
+	}
+
+	public void setRuntimeSpecialSymbol(RuntimeSpecialSymbol runtimeSpecialSymbol) {
+		this.runtimeSpecialSymbol = runtimeSpecialSymbol;
 	}
 
 	public String getGender() {
@@ -68,12 +72,12 @@ public class Interest {
 		this.runtime = runtime;
 	}
 
-	public RuntimeSpecialSymbole getRuntimeSpecialSymbole() {
-		return runtimeSpecialSymbole;
+	public RuntimeSpecialSymbol getRuntimeSpecialSymbol() {
+		return runtimeSpecialSymbol;
 	}
 
-	public void setRuntimeSpecialSymbole(RuntimeSpecialSymbole runtimeSpecialSymbole) {
-		this.runtimeSpecialSymbole = runtimeSpecialSymbole;
+	public void setRuntimeSpecialSymbole(RuntimeSpecialSymbol runtimeSpecialSymbol) {
+		this.runtimeSpecialSymbol = runtimeSpecialSymbol;
 	}
 
 	public Genre getGenres() {
@@ -94,9 +98,9 @@ public class Interest {
 
 	@Override
 	public String toString() {
-		return "Interest [interest_id=" + interest_id + ", gender=" + gender + ", ratings=" + ratings
+		return "Interest [interestId=" + interestId + ", gender=" + gender + ", ratings=" + ratings
 				+ ", ratingsWithPlus=" + ratingsWithPlus + ", runtime=" + runtime + ", runtimeSpecialSymbole="
-				+ runtimeSpecialSymbole + ", genres=" + genres + ", actors=" + actors + "]";
+				+ runtimeSpecialSymbol + ", genres=" + genres + ", actors=" + actors + "]";
 	}
 
 }

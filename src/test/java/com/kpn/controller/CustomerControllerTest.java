@@ -15,7 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.util.MimeTypeUtils;
 
-import com.kpn.model.CustomerInterest;
+import com.kpn.model.response.CustomerInterest;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -45,7 +45,6 @@ public class CustomerControllerTest extends AbstractControllerTest {
 				.andReturn();
 
 		List<CustomerInterest> actualResponse = deSerializeObject(result.getResponse().getContentAsString());
-		System.out.println(actualResponse.get(0).getImdb());
 		Assert.assertTrue(actualResponse.get(0).getImdb().equals("https://www.imdb.com/title/tt0462499"));
 
 	}
@@ -58,7 +57,6 @@ public class CustomerControllerTest extends AbstractControllerTest {
 				.andReturn();
 
 		List<CustomerInterest> actualResponse = deSerializeObject(result.getResponse().getContentAsString());
-		System.out.println(actualResponse.get(0).getTitle());
 		Assert.assertTrue(actualResponse.get(0).getTitle().equals("Rambo"));
 
 	}

@@ -1,5 +1,10 @@
 package com.kpn.exception;
 
+/**
+ * 
+ * Class for sending global error response message
+ * 
+ */
 public class ApiErrorResponse {
 	
 	private String message;

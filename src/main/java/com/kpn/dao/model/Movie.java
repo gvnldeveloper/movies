@@ -17,28 +17,28 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
-import com.kpn.model.Genre;
+import com.kpn.model.constant.Genre;
 
 @Entity
 public class Movie {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int movie_id;
+	private int movieId;
 	private String title;
 	private float rating;
 	private int runtime;
 	private String imdb;
 
 	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "MOVIE_ACTOR_MAP", joinColumns = { @JoinColumn(name = "movie_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "actor_id") })
+	@JoinTable(name = "MOVIE_ACTOR_MAP", joinColumns = { @JoinColumn(name = "movieId") }, inverseJoinColumns = {
+			@JoinColumn(name = "actorId") })
 	private List<Actor> actors = new ArrayList<Actor>();
 
 	@Enumerated(EnumType.STRING)
 	@ElementCollection(targetClass = Genre.class)
-	@CollectionTable(name = "MOVIE_GENRE_MAP", joinColumns = @JoinColumn(name = "movie_id"))
-	@Column(name = "GENRE_ID")
+	@CollectionTable(name = "MOVIEGENRES", joinColumns = @JoinColumn(name = "movieId"))
+	@Column(name = "GENREID")
 	private List<Genre> genres = new ArrayList<Genre>();
 
 	public Movie(String title, float rating, int runtime, String imdb, List<Actor> actors, List<Genre> genres) {
@@ -48,6 +48,14 @@ public class Movie {
 		this.imdb = imdb;
 		this.actors = actors;
 		this.genres = genres;
+	}
+
+	public int getMovieId() {
+		return movieId;
+	}
+
+	public void setMovieId(int movieId) {
+		this.movieId = movieId;
 	}
 
 	public Movie() {
@@ -85,18 +93,11 @@ public class Movie {
 		this.imdb = imdb;
 	}
 
-	
 	public List<Genre> getGenres() {
 		return genres;
 	}
 
-	public int getMovie_id() {
-		return movie_id;
-	}
-
-	public void setMovie_id(int movie_id) {
-		this.movie_id = movie_id;
-	}
+	
 
 	public void setActors(List<Actor> actors) {
 		this.actors = actors;
@@ -112,7 +113,7 @@ public class Movie {
 
 	@Override
 	public String toString() {
-		return "Movie [movie_id=" + movie_id + ", title=" + title + ", rating=" + rating + ", runtime=" + runtime
+		return "Movie [movieId=" + movieId + ", title=" + title + ", rating=" + rating + ", runtime=" + runtime
 				+ ", imdb=" + imdb + ", actors=" + actors + ", genres=" + genres + "]";
 	}
 

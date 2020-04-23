@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.kpn.model.RuntimeSpecialSymbole;
+import com.kpn.model.constant.RuntimeSpecialSymbol;
 
 @Component
 public class InterestMapper {
@@ -51,7 +51,7 @@ public class InterestMapper {
 		String runtimeIn = interestIn.getRatings();
 		if (runtimeIn != null) {
 
-			StringBuffer num = new StringBuffer();
+			StringBuilder num = new StringBuilder();
 			for (int i = 0; i < runtimeIn.length(); i++) {
 				if (Character.isDigit(runtimeIn.charAt(i)))
 					num.append(runtimeIn.charAt(i));
@@ -71,16 +71,16 @@ public class InterestMapper {
 		}
 		String runtimeIn = interestIn.getRuntime();
 		if (runtimeIn != null) {
-			StringBuffer num = new StringBuffer();
+			StringBuilder num = new StringBuilder();
 			for (int i = 0; i < runtimeIn.length(); i++) {
 				if (Character.isDigit(runtimeIn.charAt(i)))
 					num.append(runtimeIn.charAt(i));
 				if (runtimeIn.charAt(i) == '<')
-					interestOut.setRuntimeSpecialSymbole(RuntimeSpecialSymbole.LESS_THEN);
+					interestOut.setRuntimeSpecialSymbole(RuntimeSpecialSymbol.LESS_THEN);
 				else if (runtimeIn.charAt(i) == '>')
-					interestOut.setRuntimeSpecialSymbole(RuntimeSpecialSymbole.GREATER_THAN);
+					interestOut.setRuntimeSpecialSymbole(RuntimeSpecialSymbol.GREATER_THAN);
 				else if (runtimeIn.charAt(i) == '=')
-					interestOut.setRuntimeSpecialSymbole(RuntimeSpecialSymbole.EQUALS);
+					interestOut.setRuntimeSpecialSymbole(RuntimeSpecialSymbol.EQUALS);
 			}
 			interestOut.setRuntime("" + num);
 

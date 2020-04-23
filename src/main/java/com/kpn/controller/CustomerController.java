@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kpn.exception.InterestNotFound;
 import com.kpn.exception.UserNotFoundException;
-import com.kpn.model.CustomerInterest;
+import com.kpn.model.response.CustomerInterest;
 import com.kpn.service.CustomerService;
 
 @RestController
@@ -25,6 +25,12 @@ public class CustomerController {
 	@Autowired
 	private CustomerService customerService;
 
+	/**
+	 * End Point to find Customer Interest
+	 * 
+	 * @param id Customer unique identity
+	 * @return ResponseEntity<List<CustomerInterest>> Customer Interest List
+	 */
 	@GetMapping(path = GET_CUSTOMER_INTEREST_ENDPOINT)
 	public ResponseEntity<List<CustomerInterest>> getInterest(@PathVariable String id)
 			throws UserNotFoundException, InterestNotFound {

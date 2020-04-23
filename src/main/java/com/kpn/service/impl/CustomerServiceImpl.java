@@ -2,7 +2,7 @@ package com.kpn.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,9 +15,9 @@ import com.kpn.exception.InterestNotFound;
 import com.kpn.exception.UserNotFoundException;
 import com.kpn.mapper.CustomerMapper;
 import com.kpn.mapper.InterestMapper;
-import com.kpn.model.CustomerInterest;
-import com.kpn.model.Genre;
-import com.kpn.model.RuntimeSpecialSymbole;
+import com.kpn.model.constant.Genre;
+import com.kpn.model.constant.RuntimeSpecialSymbol;
+import com.kpn.model.response.CustomerInterest;
 import com.kpn.service.CustomerService;
 import com.kpn.service.MovieService;
 
@@ -43,23 +43,18 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public com.kpn.dao.model.Customer findById(int id) throws UserNotFoundException {
+	public Optional<com.kpn.dao.model.Customer> findById(int id) {
 		LOGGER.info("Fetch Customer using ID:  {}", id);
-		try {
-			return customerDao.findById(id).get();
-		} catch (NoSuchElementException ex) {
-			throw new UserNotFoundException("Customer Not Found");
-		}
-
+		return customerDao.findById(id);
 	}
 
 	@Override
 	public List<CustomerInterest> getInterest(String id) throws UserNotFoundException, InterestNotFound {
 		LOGGER.info("Enter Get Interest in CustomerService {}", id);
 		List<CustomerInterest> customerInterest = new ArrayList<CustomerInterest>();
-		com.kpn.dao.model.Customer customer = findById(Integer.parseInt(id));
-		if (customer != null) {
-			List<com.kpn.dao.model.Interest> interests = customer.getInterests();
+		Optional<com.kpn.dao.model.Customer> customer = findById(Integer.parseInt(id));
+		if (customer.isPresent()) {
+			List<com.kpn.dao.model.Interest> interests = customer.get().getInterests();
 			if (interests != null && !interests.isEmpty()) {
 				com.kpn.dao.model.Interest inter = interests.get(0);
 				List<com.kpn.dao.model.Movie> out = movieService.findAll();
@@ -77,15 +72,15 @@ public class CustomerServiceImpl implements CustomerService {
 					}
 
 					if (inter.getRuntime() != null) {
-						if (inter.getRuntimeSpecialSymbole().equals(RuntimeSpecialSymbole.EQUALS)
+						if (inter.getRuntimeSpecialSymbol().equals(RuntimeSpecialSymbol.EQUALS)
 								&& Integer.parseInt(inter.getRuntime()) == movie.getRuntime()) {
 							customerInterest.add(new CustomerInterest(movie.getTitle(), movie.getImdb()));
 							return;
-						} else if (inter.getRuntimeSpecialSymbole().equals(RuntimeSpecialSymbole.GREATER_THAN)
+						} else if (inter.getRuntimeSpecialSymbol().equals(RuntimeSpecialSymbol.GREATER_THAN)
 								&& Integer.parseInt(inter.getRuntime()) > movie.getRuntime()) {
 							customerInterest.add(new CustomerInterest(movie.getTitle(), movie.getImdb()));
 							return;
-						} else if (inter.getRuntimeSpecialSymbole().equals(RuntimeSpecialSymbole.LESS_THEN)
+						} else if (inter.getRuntimeSpecialSymbol().equals(RuntimeSpecialSymbol.LESS_THEN)
 								&& movie.getRuntime() < Integer.parseInt(inter.getRuntime())) {
 							customerInterest.add(new CustomerInterest(movie.getTitle(), movie.getImdb()));
 							return;
@@ -134,7 +129,6 @@ public class CustomerServiceImpl implements CustomerService {
 
 	/*
 	 * 
-	 * 
 	 * @Override public List<CustomerInterest> getInterest(String id) throws
 	 * UserNotFoundException, InterestNotFound {
 	 * LOGGER.info("Enter Get Interest in CustomerService {}", id);
@@ -148,7 +142,5 @@ public class CustomerServiceImpl implements CustomerService {
 	 * UserNotFoundException("Customer Not Found"); }
 	 * LOGGER.info("Exit Get Interest in CustomerService {}", customerInterest);
 	 * return customerInterest; }
-	 * 
 	 */
-
 }

@@ -8,6 +8,12 @@ import org.springframework.stereotype.Component;
 public class ActorMapper {
 	private final Logger LOGGER = LoggerFactory.getLogger(ActorMapper.class);
 
+	/**
+	 * Mapping External Actor to Internal Actor
+	 * 
+	 * @param actorIn External Actor
+	 * @return com.kpn.dao.model.Actor Database Actor object
+	 */
 	public com.kpn.dao.model.Actor mapExternalToInternal(com.kpn.model.Actor actorIn) {
 		LOGGER.info("Enter Map External Actor Data to Internal");
 		if (actorIn == null) {
@@ -22,6 +28,12 @@ public class ActorMapper {
 
 	}
 
+	/**
+	 * Mapping Internal Actor to External Actor
+	 * 
+	 * @param actorIn Database Actor
+	 * @return com.kpn.dao.model.Actor External Actor object
+	 */
 	public com.kpn.model.Actor mapInternalToExternal(com.kpn.dao.model.Actor actorIn) {
 		LOGGER.info("Enter Map Internal Actor Data to External");
 		if (actorIn == null) {

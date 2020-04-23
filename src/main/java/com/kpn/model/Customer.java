@@ -3,10 +3,14 @@ package com.kpn.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
+
 public class Customer {
 	private int customer_id;
 	private String name;
 	private List<Interest> interests = new ArrayList<Interest>();
+
+	
 
 	public int getCustomer_id() {
 		return customer_id;

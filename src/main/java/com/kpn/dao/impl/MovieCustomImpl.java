@@ -1,11 +1,7 @@
-package com.kpn.dao;
+package com.kpn.dao.impl;
 
-import com.kpn.dao.model.Interest;
-import com.kpn.dao.model.Movie;
-import com.kpn.model.RuntimeSpecialSymbole;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Repository;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -14,8 +10,15 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.ArrayList;
-import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
+
+import com.kpn.dao.MovieCustom;
+import com.kpn.dao.model.Interest;
+import com.kpn.dao.model.Movie;
+import com.kpn.model.constant.RuntimeSpecialSymbol;
 
 @Repository
 public class MovieCustomImpl implements MovieCustom {
@@ -23,6 +26,14 @@ public class MovieCustomImpl implements MovieCustom {
 	@PersistenceContext
 	EntityManager entityManager;
 
+	/**
+	 * List of Movies based on Customer Interest
+	 * 
+	 * It is not functional right now..need to work
+	 * 
+	 * @param interest Customer interest
+	 * @return List<Movie> List of movies
+	 */
 	@Override
 	public List<Movie> findByCriteria(Interest interest) {
 		LOGGER.info("Enter findByCriteria");
@@ -39,11 +50,11 @@ public class MovieCustomImpl implements MovieCustom {
 		}
 
 		if (interest.getRuntime() != null) {
-			if (interest.getRuntimeSpecialSymbole().equals(RuntimeSpecialSymbole.GREATER_THAN))
+			if (interest.getRuntimeSpecialSymbol().equals(RuntimeSpecialSymbol.GREATER_THAN))
 				predicates.add(cb.greaterThan(movie.get("runtime"), Integer.parseInt(interest.getRuntime())));
-			else if (interest.getRuntimeSpecialSymbole().equals(RuntimeSpecialSymbole.EQUALS))
+			else if (interest.getRuntimeSpecialSymbol().equals(RuntimeSpecialSymbol.EQUALS))
 				predicates.add(cb.equal(movie.get("runtime"), Integer.parseInt(interest.getRuntime())));
-			else if (interest.getRuntimeSpecialSymbole().equals(RuntimeSpecialSymbole.LESS_THEN))
+			else if (interest.getRuntimeSpecialSymbol().equals(RuntimeSpecialSymbol.LESS_THEN))
 				predicates.add(cb.lessThan(movie.get("runtime"), Integer.parseInt(interest.getRuntime())));
 		}
 
@@ -61,7 +72,6 @@ public class MovieCustomImpl implements MovieCustom {
 
 		}
 
-		
 		cq.where(predicates.toArray(new Predicate[] {}));
 		TypedQuery<Movie> query = entityManager.createQuery(cq);
 		List<Movie> items = query.getResultList();

@@ -9,6 +9,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.kpn.model.constant.Genre;
+
 @XmlRootElement(name = "movie")
 @XmlAccessorType(XmlAccessType.PROPERTY)
 public class Movie {
@@ -86,15 +88,14 @@ public class Movie {
 		this.genres = genres;
 	}
 
-	
 	public void setActors(List<Actor> actors) {
 		this.actors = actors;
 	}
 
 	@Override
 	public String toString() {
-		return "Movie [title=" + title + ", rating=" + rating + ", runtime=" + runtime
-				+ ", imdb=" + imdb + ", actors=" + actors + ", genres=" + genres + "]";
+		return "Movie [title=" + title + ", rating=" + rating + ", runtime=" + runtime + ", imdb=" + imdb + ", actors="
+				+ actors + ", genres=" + genres + "]";
 	}
 
 }

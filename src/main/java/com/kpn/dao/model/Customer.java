@@ -12,19 +12,19 @@ import javax.persistence.ManyToMany;
 @Entity
 public class Customer {
 	@Id
-	private int customer_id;
+	private int customerId;
 	private String name;
 	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "CUSTOMER_INTEREST_MAP", joinColumns = {
-			@JoinColumn(name = "customer_id") }, inverseJoinColumns = { @JoinColumn(name = "interest_id") })
+	@JoinTable(name = "CUSTOMERINTERESTS", joinColumns = { @JoinColumn(name = "customerId") }, inverseJoinColumns = {
+			@JoinColumn(name = "interestId") })
 	private List<Interest> interests;
 
-	public int getCustomer_id() {
-		return customer_id;
+	public int getCustomerId() {
+		return customerId;
 	}
 
-	public void setCustomer_id(int customer_id) {
-		this.customer_id = customer_id;
+	public void setCustomerId(int customerId) {
+		this.customerId = customerId;
 	}
 
 	public String getName() {
@@ -43,8 +43,8 @@ public class Customer {
 		this.interests = interests;
 	}
 
-	public Customer(int customer_id, String name, List<Interest> interests) {
-		this.customer_id = customer_id;
+	public Customer(int customerId, String name, List<Interest> interests) {
+		this.customerId = customerId;
 		this.name = name;
 		this.interests = interests;
 	}
@@ -54,7 +54,7 @@ public class Customer {
 
 	@Override
 	public String toString() {
-		return "Customer [customer_id=" + customer_id + ", name=" + name + ", interests=" + interests + "]";
+		return "Customer [customerId=" + customerId + ", name=" + name + ", interests=" + interests + "]";
 	}
 
 }

@@ -5,12 +5,18 @@ import java.io.Serializable;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
+import com.kpn.model.constant.Genre;
+
 public class Interest implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	private String gender;
 	private String ratings;
 	private String runtime;

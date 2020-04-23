@@ -14,6 +14,12 @@ public class CustomerMapper {
 	@Autowired
 	private InterestMapper interestMapper;
 
+	/**
+	 * Mapping External Customer to Internal Customer
+	 * 
+	 * @param customerIn Database Customer
+	 * @return com.kpn.dao.model.Customer External Customer object
+	 */
 	public com.kpn.dao.model.Customer mapExternalToInternal(com.kpn.model.Customer customerIn) {
 		LOGGER.info("Enter Map External Customer Data to Internal");
 		if (customerIn == null) {
@@ -21,7 +27,7 @@ public class CustomerMapper {
 			return null;
 		}
 		com.kpn.dao.model.Customer customerOut = new com.kpn.dao.model.Customer();
-		customerOut.setCustomer_id(customerIn.getCustomer_id());
+		customerOut.setCustomerId(customerIn.getCustomer_id());
 		if (customerIn.getInterests() != null) {
 			List<com.kpn.dao.model.Interest> ineterestModel = new ArrayList<com.kpn.dao.model.Interest>();
 			for (com.kpn.model.Interest interest : customerIn.getInterests()) {
@@ -34,7 +40,12 @@ public class CustomerMapper {
 		LOGGER.info("Exit Map External Customer Data to Internal");
 		return customerOut;
 	}
-	
+	/**
+	 * Mapping Internal Customer to External Customer
+	 * 
+	 * @param customerIn External Customer
+	 * @return com.kpn.dao.model.Customer Database Customer object
+	 */
 	public com.kpn.model.Customer mapInternalToExternal(com.kpn.dao.model.Customer customerIn) {
 		LOGGER.info("Enter Map External Customer Data to Internal");
 		if (customerIn == null) {
@@ -44,7 +55,7 @@ public class CustomerMapper {
 		
 		com.kpn.model.Customer customerOut = new com.kpn.model.Customer();
 		
-		customerOut.setCustomer_id(customerIn.getCustomer_id());
+		customerOut.setCustomer_id(customerIn.getCustomerId());
 		if (customerIn.getInterests() != null) {
 			List<com.kpn.model.Interest> ineterestModel = new ArrayList<com.kpn.model.Interest>();
 			for (com.kpn.dao.model.Interest interest : customerIn.getInterests()) {

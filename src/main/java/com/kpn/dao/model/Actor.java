@@ -10,7 +10,7 @@ public class Actor {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int actor_id;
+	private int id;
 	private String gender;
 
 	private String name;
@@ -39,17 +39,19 @@ public class Actor {
 		this.name = name;
 	}
 
-	public int getActor_id() {
-		return actor_id;
+	public int getId() {
+		return id;
 	}
 
-	public void setActor_id(int actor_id) {
-		this.actor_id = actor_id;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	@Override
 	public String toString() {
-		return "Actor [actor_id=" + actor_id + ", gender=" + gender + ", name=" + name + "]";
+		return "Actor [id=" + id + ", gender=" + gender + ", name=" + name + "]";
 	}
 
+
+	
 }
