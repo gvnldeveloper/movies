@@ -15,7 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.util.MimeTypeUtils;
 
-import com.kpn.model.response.CustomerInterest;
+import com.kpn.dto.response.CustomerInterest;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

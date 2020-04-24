@@ -11,13 +11,13 @@ import org.springframework.stereotype.Service;
 
 import com.kpn.dao.CustomerDao;
 import com.kpn.dao.model.Actor;
+import com.kpn.dto.constant.Genre;
+import com.kpn.dto.constant.RuntimeSpecialSymbol;
+import com.kpn.dto.response.CustomerInterest;
 import com.kpn.exception.InterestNotFound;
 import com.kpn.exception.UserNotFoundException;
 import com.kpn.mapper.CustomerMapper;
 import com.kpn.mapper.InterestMapper;
-import com.kpn.model.constant.Genre;
-import com.kpn.model.constant.RuntimeSpecialSymbol;
-import com.kpn.model.response.CustomerInterest;
 import com.kpn.service.CustomerService;
 import com.kpn.service.MovieService;
 
@@ -37,7 +37,7 @@ public class CustomerServiceImpl implements CustomerService {
 	MovieService movieService;
 
 	@Override
-	public com.kpn.dao.model.Customer save(com.kpn.model.Customer customer) {
+	public com.kpn.dao.model.Customer save(com.kpn.dto.Customer customer) {
 		LOGGER.info("Save Customer");
 		return customerDao.save(customerMapper.mapExternalToInternal(customer));
 	}
@@ -56,67 +56,68 @@ public class CustomerServiceImpl implements CustomerService {
 		if (customer.isPresent()) {
 			List<com.kpn.dao.model.Interest> interests = customer.get().getInterests();
 			if (interests != null && !interests.isEmpty()) {
-				com.kpn.dao.model.Interest inter = interests.get(0);
-				List<com.kpn.dao.model.Movie> out = movieService.findAll();
+				List<com.kpn.dao.model.Movie> movieResponse = movieService.findAll();
+				interests.stream().forEach(inter -> {
+					movieResponse.stream().forEach(movie -> {
+						if (inter.getRatings() != null) {
+							if (inter.getRatings().equals("" + movie.getRating()) && inter.isRatingsWithPlus()) {
+								customerInterest.add(new CustomerInterest(movie.getTitle(), movie.getImdb()));
+								return;
+							} else if (inter.getRatings().equals("" + movie.getRating())) {
+								customerInterest.add(new CustomerInterest(movie.getTitle(), movie.getImdb()));
+								return;
+							}
 
-				out.stream().distinct().forEach(movie -> {
-					if (inter.getRatings() != null) {
-						if (inter.getRatings().equals("" + movie.getRating()) && inter.isRatingsWithPlus()) {
-							customerInterest.add(new CustomerInterest(movie.getTitle(), movie.getImdb()));
-							return;
-						} else if (inter.getRatings().equals("" + movie.getRating())) {
-							customerInterest.add(new CustomerInterest(movie.getTitle(), movie.getImdb()));
-							return;
 						}
 
-					}
-
-					if (inter.getRuntime() != null) {
-						if (inter.getRuntimeSpecialSymbol().equals(RuntimeSpecialSymbol.EQUALS)
-								&& Integer.parseInt(inter.getRuntime()) == movie.getRuntime()) {
-							customerInterest.add(new CustomerInterest(movie.getTitle(), movie.getImdb()));
-							return;
-						} else if (inter.getRuntimeSpecialSymbol().equals(RuntimeSpecialSymbol.GREATER_THAN)
-								&& Integer.parseInt(inter.getRuntime()) > movie.getRuntime()) {
-							customerInterest.add(new CustomerInterest(movie.getTitle(), movie.getImdb()));
-							return;
-						} else if (inter.getRuntimeSpecialSymbol().equals(RuntimeSpecialSymbol.LESS_THEN)
-								&& movie.getRuntime() < Integer.parseInt(inter.getRuntime())) {
-							customerInterest.add(new CustomerInterest(movie.getTitle(), movie.getImdb()));
-							return;
-						}
-					}
-
-					if (inter.getGender() != null && !movie.getActors().isEmpty()) {
-						for (Actor actor : movie.getActors()) {
-							if (inter.getGender().equals(actor.getGender())) {
+						if (inter.getRuntime() != null) {
+							if (inter.getRuntimeSpecialSymbol().equals(RuntimeSpecialSymbol.EQUALS)
+									&& Integer.parseInt(inter.getRuntime()) == movie.getRuntime()) {
+								customerInterest.add(new CustomerInterest(movie.getTitle(), movie.getImdb()));
+								return;
+							} else if (inter.getRuntimeSpecialSymbol().equals(RuntimeSpecialSymbol.GREATER_THAN)
+									&& Integer.parseInt(inter.getRuntime()) > movie.getRuntime()) {
+								customerInterest.add(new CustomerInterest(movie.getTitle(), movie.getImdb()));
+								return;
+							} else if (inter.getRuntimeSpecialSymbol().equals(RuntimeSpecialSymbol.LESS_THEN)
+									&& movie.getRuntime() < Integer.parseInt(inter.getRuntime())) {
 								customerInterest.add(new CustomerInterest(movie.getTitle(), movie.getImdb()));
 								return;
 							}
 						}
 
-					}
-
-					if (inter.getGenres() != null) {
-
-						for (Genre genre : movie.getGenres()) {
-							if (inter.getGenres().equals(genre)) {
-								customerInterest.add(new CustomerInterest(movie.getTitle(), movie.getImdb()));
-								return;
+						if (inter.getGender() != null && !movie.getActors().isEmpty()) {
+							for (Actor actor : movie.getActors()) {
+								if (inter.getGender().equals(actor.getGender())) {
+									customerInterest.add(new CustomerInterest(movie.getTitle(), movie.getImdb()));
+									return;
+								}
 							}
+
 						}
 
-					}
+						if (inter.getGenres() != null) {
 
-					if (inter.getActors() != null && !inter.getActors().isEmpty()) {
-						for (Actor actor : movie.getActors()) {
-							if (inter.getActors().equals(actor.getName())) {
-								customerInterest.add(new CustomerInterest(movie.getTitle(), movie.getImdb()));
-								return;
+							for (Genre genre : movie.getGenres()) {
+								if (inter.getGenres().equals(genre)) {
+									customerInterest.add(new CustomerInterest(movie.getTitle(), movie.getImdb()));
+									return;
+								}
+							}
+
+						}
+
+						if (inter.getActors() != null && !inter.getActors().isEmpty()) {
+							for (Actor actor : movie.getActors()) {
+								if (inter.getActors().equals(actor.getName())) {
+									customerInterest.add(new CustomerInterest(movie.getTitle(), movie.getImdb()));
+									return;
+								}
 							}
 						}
-					}
+					});
 				});
+
 			} else {
 				throw new InterestNotFound("Customer Interest Not Available");
 			}

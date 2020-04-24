@@ -21,7 +21,7 @@ public class MovieServiceImpl implements MovieService {
 	private MovieMapper movieMapper;
 
 	@Override
-	public com.kpn.dao.model.Movie save(com.kpn.model.Movie movie) {
+	public com.kpn.dao.model.Movie save(com.kpn.dto.Movie movie) {
 		return movieDao.save(movieMapper.mapExternalToInternal(movie));
 	}
 

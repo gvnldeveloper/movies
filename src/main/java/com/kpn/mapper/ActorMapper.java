@@ -14,7 +14,7 @@ public class ActorMapper {
 	 * @param actorIn External Actor
 	 * @return com.kpn.dao.model.Actor Database Actor object
 	 */
-	public com.kpn.dao.model.Actor mapExternalToInternal(com.kpn.model.Actor actorIn) {
+	public com.kpn.dao.model.Actor mapExternalToInternal(com.kpn.dto.Actor actorIn) {
 		LOGGER.info("Enter Map External Actor Data to Internal");
 		if (actorIn == null) {
 			LOGGER.info("Input Actor is Null in mapExternalToInternal");
@@ -34,13 +34,13 @@ public class ActorMapper {
 	 * @param actorIn Database Actor
 	 * @return com.kpn.dao.model.Actor External Actor object
 	 */
-	public com.kpn.model.Actor mapInternalToExternal(com.kpn.dao.model.Actor actorIn) {
+	public com.kpn.dto.Actor mapInternalToExternal(com.kpn.dao.model.Actor actorIn) {
 		LOGGER.info("Enter Map Internal Actor Data to External");
 		if (actorIn == null) {
 			LOGGER.info("Input Actor is Null in mapInternalToExternal");
 			return null;
 		}
-		com.kpn.model.Actor actorOut = new com.kpn.model.Actor();
+		com.kpn.dto.Actor actorOut = new com.kpn.dto.Actor();
 		actorOut.setName(actorIn.getName());
 		actorOut.setGender(actorIn.getGender());
 		LOGGER.info("Exit Map External Actor Data to Internal");

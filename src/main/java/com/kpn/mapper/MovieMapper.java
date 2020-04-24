@@ -14,7 +14,7 @@ public class MovieMapper {
 	@Autowired
 	private ActorMapper actorMapper;
 
-	public com.kpn.dao.model.Movie mapExternalToInternal(com.kpn.model.Movie movieIn) {
+	public com.kpn.dao.model.Movie mapExternalToInternal(com.kpn.dto.Movie movieIn) {
 		LOGGER.info("Enter Map External Movie Data to Internal");
 		if (movieIn == null) {
 			LOGGER.info("Internal Movie Data is Null in ExternaltoInternal");
@@ -28,7 +28,7 @@ public class MovieMapper {
 		movieOut.setGenres(movieIn.getGenres());
 		if (movieIn.getActors() != null) {
 			List<com.kpn.dao.model.Actor> actorModel = new ArrayList<com.kpn.dao.model.Actor>();
-			for (com.kpn.model.Actor actor : movieIn.getActors()) {
+			for (com.kpn.dto.Actor actor : movieIn.getActors()) {
 				actorModel.add(actorMapper.mapExternalToInternal(actor));
 
 			}
@@ -38,20 +38,20 @@ public class MovieMapper {
 		return movieOut;
 	}
 
-	public com.kpn.model.Movie mapInternalToExternal(com.kpn.dao.model.Movie movieIn) {
+	public com.kpn.dto.Movie mapInternalToExternal(com.kpn.dao.model.Movie movieIn) {
 		LOGGER.info("Enter Map Internal Movie Data to External");
 		if (movieIn == null) {
 			LOGGER.info("Movie Input Null in InternaltoExternal");
 			return null;
 		}
-		com.kpn.model.Movie movieOut = new com.kpn.model.Movie();
+		com.kpn.dto.Movie movieOut = new com.kpn.dto.Movie();
 		movieOut.setImdb(movieIn.getImdb());
 		movieOut.setRating(movieIn.getRating());
 		movieOut.setRuntime(movieIn.getRuntime());
 		movieOut.setTitle(movieIn.getTitle());
 		movieOut.setGenres(movieIn.getGenres());
 		if (movieIn.getActors() != null) {
-			List<com.kpn.model.Actor> actorModel = new ArrayList<com.kpn.model.Actor>();
+			List<com.kpn.dto.Actor> actorModel = new ArrayList<com.kpn.dto.Actor>();
 			for (com.kpn.dao.model.Actor actor : movieIn.getActors()) {
 				actorModel.add(actorMapper.mapInternalToExternal(actor));
 

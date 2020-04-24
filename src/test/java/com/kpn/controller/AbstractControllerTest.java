@@ -12,7 +12,7 @@ import org.springframework.test.web.servlet.MvcResult;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kpn.model.response.CustomerInterest;
+import com.kpn.dto.response.CustomerInterest;
 
 public abstract class AbstractControllerTest {
 

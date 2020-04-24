@@ -18,7 +18,7 @@ public class ActorServiceImpl implements ActorService {
 	private ActorDao actorDao;
 
 	@Override
-	public com.kpn.dao.model.Actor save(com.kpn.model.Actor actor) {
+	public com.kpn.dao.model.Actor save(com.kpn.dto.Actor actor) {
 		return actorDao.save(actorMapper.mapExternalToInternal(actor));
 	}
 }

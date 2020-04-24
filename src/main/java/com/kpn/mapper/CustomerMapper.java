@@ -20,7 +20,7 @@ public class CustomerMapper {
 	 * @param customerIn Database Customer
 	 * @return com.kpn.dao.model.Customer External Customer object
 	 */
-	public com.kpn.dao.model.Customer mapExternalToInternal(com.kpn.model.Customer customerIn) {
+	public com.kpn.dao.model.Customer mapExternalToInternal(com.kpn.dto.Customer customerIn) {
 		LOGGER.info("Enter Map External Customer Data to Internal");
 		if (customerIn == null) {
 			LOGGER.info("Input Customer is Null in mapExternalToInternal");
@@ -30,7 +30,7 @@ public class CustomerMapper {
 		customerOut.setCustomerId(customerIn.getCustomer_id());
 		if (customerIn.getInterests() != null) {
 			List<com.kpn.dao.model.Interest> ineterestModel = new ArrayList<com.kpn.dao.model.Interest>();
-			for (com.kpn.model.Interest interest : customerIn.getInterests()) {
+			for (com.kpn.dto.Interest interest : customerIn.getInterests()) {
 				ineterestModel.add(interestMapper.mapExternalToInternal(interest));
 
 			}
@@ -46,18 +46,18 @@ public class CustomerMapper {
 	 * @param customerIn External Customer
 	 * @return com.kpn.dao.model.Customer Database Customer object
 	 */
-	public com.kpn.model.Customer mapInternalToExternal(com.kpn.dao.model.Customer customerIn) {
+	public com.kpn.dto.Customer mapInternalToExternal(com.kpn.dao.model.Customer customerIn) {
 		LOGGER.info("Enter Map External Customer Data to Internal");
 		if (customerIn == null) {
 			LOGGER.info("Input Customer is Null in mapInternalToExternal");
 			return null;
 		}
 		
-		com.kpn.model.Customer customerOut = new com.kpn.model.Customer();
+		com.kpn.dto.Customer customerOut = new com.kpn.dto.Customer();
 		
 		customerOut.setCustomer_id(customerIn.getCustomerId());
 		if (customerIn.getInterests() != null) {
-			List<com.kpn.model.Interest> ineterestModel = new ArrayList<com.kpn.model.Interest>();
+			List<com.kpn.dto.Interest> ineterestModel = new ArrayList<com.kpn.dto.Interest>();
 			for (com.kpn.dao.model.Interest interest : customerIn.getInterests()) {
 				ineterestModel.add(interestMapper.mapInternalToExternal(interest));
 

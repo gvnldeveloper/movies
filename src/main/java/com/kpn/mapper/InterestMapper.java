@@ -4,13 +4,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.kpn.model.constant.RuntimeSpecialSymbol;
+import com.kpn.dto.constant.RuntimeSpecialSymbol;
 
 @Component
 public class InterestMapper {
 	private final Logger LOGGER = LoggerFactory.getLogger(InterestMapper.class);
 
-	public com.kpn.dao.model.Interest mapExternalToInternal(com.kpn.model.Interest interestIn) {
+	public com.kpn.dao.model.Interest mapExternalToInternal(com.kpn.dto.Interest interestIn) {
 		LOGGER.info("Enter Map External Interest Data to Internal");
 		if (interestIn == null) {
 			LOGGER.info("Input Interest is Null in mapExternalToInternal");
@@ -27,13 +27,13 @@ public class InterestMapper {
 		return interestOut;
 	}
 
-	public com.kpn.model.Interest mapInternalToExternal(com.kpn.dao.model.Interest interestIn) {
+	public com.kpn.dto.Interest mapInternalToExternal(com.kpn.dao.model.Interest interestIn) {
 		LOGGER.info("Enter Map Internal Interest Data to External");
 		if (interestIn == null) {
 			LOGGER.info("Input Interest is Null in mapInternalToExternal");
 			return null;
 		}
-		com.kpn.model.Interest interestOut = new com.kpn.model.Interest();
+		com.kpn.dto.Interest interestOut = new com.kpn.dto.Interest();
 		interestOut.setActors(interestIn.getActors());
 		interestOut.setGender(interestIn.getGender());
 		interestOut.setGenres(interestIn.getGenres());
@@ -43,7 +43,7 @@ public class InterestMapper {
 		return interestOut;
 	}
 
-	private void setRatings(com.kpn.dao.model.Interest interestOut, com.kpn.model.Interest interestIn) {
+	private void setRatings(com.kpn.dao.model.Interest interestOut, com.kpn.dto.Interest interestIn) {
 		LOGGER.info("Enter Setting Ratings Data");
 		if (interestIn == null) {
 			return;
@@ -64,7 +64,7 @@ public class InterestMapper {
 		LOGGER.info("Exit Setting Ratings Data");
 	}
 
-	private void setRuntime(com.kpn.dao.model.Interest interestOut, com.kpn.model.Interest interestIn) {
+	private void setRuntime(com.kpn.dao.model.Interest interestOut, com.kpn.dto.Interest interestIn) {
 		LOGGER.info("Enter Setting Runtime Data");
 		if (interestIn == null) {
 			return;
@@ -75,12 +75,15 @@ public class InterestMapper {
 			for (int i = 0; i < runtimeIn.length(); i++) {
 				if (Character.isDigit(runtimeIn.charAt(i)))
 					num.append(runtimeIn.charAt(i));
-				if (runtimeIn.charAt(i) == '<')
+				switch (runtimeIn.charAt(i)) {
+				case '<':
 					interestOut.setRuntimeSpecialSymbole(RuntimeSpecialSymbol.LESS_THEN);
-				else if (runtimeIn.charAt(i) == '>')
+				case '>':
 					interestOut.setRuntimeSpecialSymbole(RuntimeSpecialSymbol.GREATER_THAN);
-				else if (runtimeIn.charAt(i) == '=')
+				case '=':
 					interestOut.setRuntimeSpecialSymbole(RuntimeSpecialSymbol.EQUALS);
+				}
+
 			}
 			interestOut.setRuntime("" + num);
 

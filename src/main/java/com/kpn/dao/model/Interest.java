@@ -7,8 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import com.kpn.model.constant.Genre;
-import com.kpn.model.constant.RuntimeSpecialSymbol;
+import com.kpn.dto.constant.Genre;
+import com.kpn.dto.constant.RuntimeSpecialSymbol;
 
 @Entity
 public class Interest {

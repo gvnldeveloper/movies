@@ -18,7 +18,7 @@ public class InterestServiceImpl implements InterestService {
 	private InterestDao interestDao;
 	
 	@Override
-	public com.kpn.dao.model.Interest save(com.kpn.model.Interest interest)
+	public com.kpn.dao.model.Interest save(com.kpn.dto.Interest interest)
 	{
 		return interestDao.save(interestMapper.mapExternalToInternal(interest));
 	}

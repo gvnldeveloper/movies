@@ -17,7 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
-import com.kpn.model.constant.Genre;
+import com.kpn.dto.constant.Genre;
 
 @Entity
 public class Movie {

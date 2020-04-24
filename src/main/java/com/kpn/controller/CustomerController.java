@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kpn.dto.response.CustomerInterest;
 import com.kpn.exception.InterestNotFound;
 import com.kpn.exception.UserNotFoundException;
-import com.kpn.model.response.CustomerInterest;
 import com.kpn.service.CustomerService;
 
 @RestController

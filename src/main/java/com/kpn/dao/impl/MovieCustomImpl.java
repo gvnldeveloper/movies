@@ -18,7 +18,7 @@ import org.springframework.stereotype.Repository;
 import com.kpn.dao.MovieCustom;
 import com.kpn.dao.model.Interest;
 import com.kpn.dao.model.Movie;
-import com.kpn.model.constant.RuntimeSpecialSymbol;
+import com.kpn.dto.constant.RuntimeSpecialSymbol;
 
 @Repository
 public class MovieCustomImpl implements MovieCustom {
