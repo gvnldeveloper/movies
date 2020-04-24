@@ -34,8 +34,7 @@ public class LoadAppCustomerData implements CommandLineRunner {
 		TypeReference<List<Customer>> typeReference = new TypeReference<List<Customer>>() {
 		};
 
-		InputStream inputStream = getClass().getResourceAsStream("/input/profiles.json");
-		try {
+		try (InputStream inputStream = getClass().getResourceAsStream("/input/profiles.json")) {
 			List<Customer> customers = mapper.readValue(inputStream, typeReference);
 
 			customers.stream().forEach(customer -> {
