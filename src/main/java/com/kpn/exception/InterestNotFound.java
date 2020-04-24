@@ -1,6 +1,6 @@
 package com.kpn.exception;
 
-public class InterestNotFound extends Exception {
+public class InterestNotFound extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 	private String errorMessage;
